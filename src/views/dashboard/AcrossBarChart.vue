@@ -39,6 +39,14 @@
         chart: null
       }
     },
+    watch: {
+      acrossBarChartData: {
+        deep: true,
+        handler(val) {
+          this.initChart(val)
+        }
+      }
+    },
     mounted() {
       this.$nextTick(() => {
         this.initChart(this.acrossBarChartData)

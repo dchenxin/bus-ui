@@ -154,7 +154,7 @@
         <div class="chart-wrapper">
           <div>
             <span class="title-text">模块点击次数统计</span>
-            <el-radio-group v-model="defaultValue05" size="small" style="float: right" fill="#63aff5">
+            <el-radio-group v-model="defaultValue05" @change="modelClickBtnClick" size="small" style="float: right" fill="#63aff5">
               <el-radio-button label="昨日"></el-radio-button>
               <el-radio-button label="近七日"></el-radio-button>
               <el-radio-button label="本月"></el-radio-button>
@@ -168,11 +168,9 @@
         <div class="chart-wrapper">
           <div>
             <span class="title-text">实载率数据统计</span>
-            <el-radio-group v-model="defaultValue06" size="small" style="float: right" fill="#63aff5">
+            <el-radio-group v-model="defaultValue06" @change="realLoadBtnClick" size="small" style="float: right" fill="#63aff5">
               <el-radio-button label="昨日"></el-radio-button>
-              <el-radio-button label="近七日"></el-radio-button>
-              <el-radio-button label="本月"></el-radio-button>
-              <el-radio-button label="本年"></el-radio-button>
+              <el-radio-button label="今日"></el-radio-button>
             </el-radio-group>
           </div>
           <across-bar-chart :across-bar-chart-data="acrossBarChartData02" :unit="`%`"/>
@@ -184,7 +182,7 @@
 </template>
 
 <script>
-  import {formatDate,getBusinessStatistics,getOperationStatistics,getBuyEarlyStatistics,getSearchRateStatistics,getUserSexSpreadStatistics,getUserAgeSpreadStatistics} from "@/api/module/index";
+  import {formatDate,getBusinessStatistics,getOperationStatistics,getBuyEarlyStatistics,getSearchRateStatistics,getUserSexSpreadStatistics,getUserAgeSpreadStatistics,getModelClickStatistics,getRealLoadStatistics} from "@/api/module/index";
   import PanelGroup from './dashboard/PanelGroup'
   import LineChart from './dashboard/LineChart'
   import OneLineChart from './dashboard/OneLineChart'
@@ -278,12 +276,12 @@
         //   data: [22, 23, 34, 56, 47, 28, 21, 25, 28, 26, 25]
         // },
         acrossBarChartData: {
-          yAxisData: ["检测预约", "乡镇客运", "定制巴士", "火车", "在线客服", "天龙出行", "原汽车票订单", "定制班线", "公交查询", "武夷新区专线", "汽车票"],
-          data: [318, 468, 526, 1467, 2073, 2115, 6031, 8542, 8789, 13578, 246153]
+          yAxisData: [],
+          data: []
         },
         acrossBarChartData02: {
-          yAxisData: ["建阳", "武夷山", "南平", "延平", "浦城", "邵武", "光泽", "顺昌", "建瓯", "政和", "松溪"],
-          data: [25, 37, 45, 51, 72, 78, 84, 86, 89, 91, 95]
+          yAxisData: [],
+          data: []
         }
       }
     },
@@ -296,12 +294,14 @@
         this.getStation();
         this.getSex();
         this.getAge();
+        this.getModelClick();
+        this.getRealLoad();
       })
     },
     created() {
     },
     methods: {
-      //--------业务统计--------
+      //------------业务统计----------
       initMapData() {
         //取本地缓存
         let cacheData = JSON.parse(localStorage.getItem("businessData"))
@@ -454,7 +454,27 @@
         getUserAgeSpreadStatistics().then(response=>{
           this.pieChartData02.data = response.data.data;
         })
-      }
+      },
+      //--------------模块点击----------------
+      getModelClick(){
+        getModelClickStatistics(this.defaultValue05).then(response => {
+          this.acrossBarChartData.yAxisData = response.data.aaxisData;
+          this.acrossBarChartData.data = response.data.data;
+        })
+      },
+      modelClickBtnClick() {
+        this.getModelClick();
+      },
+      //--------------实载率----------------
+      getRealLoad(){
+        getRealLoadStatistics(this.defaultValue06).then(response => {
+          this.acrossBarChartData02.yAxisData = response.data.aaxisData;
+          this.acrossBarChartData02.data = response.data.data;
+        })
+      },
+      realLoadBtnClick() {
+        this.getRealLoad();
+      },
     }
   }
 </script>

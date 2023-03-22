@@ -48,6 +48,22 @@ export function getUserAgeSpreadStatistics() {
   })
 }
 
+// 首页模块点击统计
+export function getModelClickStatistics(type) {
+  return request({
+    url: '/module/modelClickStatistics/getModelClickStatistics/' + type,
+    method: 'get'
+  })
+}
+
+// 首页实载率统计
+export function getRealLoadStatistics(type) {
+  return request({
+    url: '/module/realLoadStatistics/getRealLoadStatistics/' + type,
+    method: 'get'
+  })
+}
+
 export function formatDate(params ) {
   let defaultParams = {
     date: new Date(),
