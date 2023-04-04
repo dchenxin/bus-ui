@@ -117,7 +117,51 @@ export const constantRoutes = [
         meta: { title: '修改生成配置' }
       }
     ]
-  }
+  },
+
+  {
+    path: '/statistics',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/buyEarlyStatistics',
+        component: (resolve) => require(['@/views/module/statistics/buyEarlyStatistics'], resolve),
+        name: 'BuyEarlyStatistics',
+        meta: { title: '提前购票时间' }
+      },
+      {
+        path: '/lineSearchStatistics',
+        component: (resolve) => require(['@/views/module/statistics/lineSearchStatistics'], resolve),
+        name: 'LineSearchStatistics',
+        meta: { title: '线路搜索频率' }
+      },
+      {
+        path: '/modelAndRealLoadStatistics',
+        component: (resolve) => require(['@/views/module/statistics/modelAndRealLoadStatistics'], resolve),
+        name: 'ModelAndRealLoadStatistics',
+        meta: { title: '模块点击及实载率' }
+      },
+      {
+        path: '/operationStatistics',
+        component: (resolve) => require(['@/views/module/statistics/operationStatistics'], resolve),
+        name: 'OperationStatistics',
+        meta: { title: '小程序运营情况' }
+      },
+      {
+        path: '/spreadStatistics',
+        component: (resolve) => require(['@/views/module/statistics/spreadStatistics'], resolve),
+        name: 'SpreadStatistics',
+        meta: { title: '用户性别年龄' }
+      },
+      {
+        path: '/stationStatistics',
+        component: (resolve) => require(['@/views/module/statistics/stationStatistics'], resolve),
+        name: 'StationStatistics',
+        meta: { title: '起终点站查询频次' }
+      },
+    ]
+  },
 ]
 
 export default new Router({
