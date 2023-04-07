@@ -60,6 +60,7 @@
         }],
         value: '1',
         countType: '订座数',
+        minMaxValue:[],
       }
     },
     mounted() {
@@ -80,15 +81,19 @@
       setOption(data){
         this.chart.setOption(
           {
-            title: {
-              text: '',
-              subtext: '',
-              padding: [15, 15],
-              textStyle: {fontFamily: '宋体', fontSize: 16, fontWeight: 'normal', color: '#55aaff'}
-            },
             tooltip: {
               trigger: 'item',
               formatter: '{b}<br />统计数：{c}'
+            },
+            visualMap:{
+              show: false,
+              type: 'piecewise',
+              left: 50,
+              bottom: 50,
+              showLabel: true,
+              itemWidth: 10,
+              itemHeight: 10,
+              inverse: true,
             },
             dataset: {
               source: data,
@@ -123,7 +128,28 @@
                   shadowOffsetY: 5,
                   label: {
                     show: true, textStyle: {color: '#000000', fontSize: 10,},
-                    formatter: '{b} \n' + this.countType + '：{@value}'
+                    // formatter: '{b} \n' + this.countType + '：{@value}'
+                    formatter: (param)=>{
+                      if(param.value === this.minMaxValue[0]){
+                          return '{green|' + param.name +'\n' + this.countType + '：' + param.value + '}'
+                      }
+                      if(param.value === this.minMaxValue[1]){
+                        return '{red|' + param.name +'\n' + this.countType + '：' + param.value + '}'
+                      }
+                      return  param.name +'\n' + this.countType + '：' + param.value
+                    },
+                    rich:{
+                      red:{
+                        color:'red',
+                        fontWeight: 'bolder',
+                        fontSize: 12
+                      },
+                      green:{
+                        color:'green',
+                        fontWeight: 'bolder',
+                        fontSize: 12
+                      }
+                    }
                   }
                 },
                 emphasis: {
@@ -150,11 +176,18 @@
         }else if (val === '5'){
           this.countType = "成交金额";
         }
+        this.setMinMaxValue(this.mapData);
         this.initMap(JSON.parse(JSON.stringify(this.mapData)));
         this.$emit('select-change', val)
       },
       setMapData(data){
+        this.setMinMaxValue(data);
         this.initMap(JSON.parse(JSON.stringify(data)));
+      },
+      setMinMaxValue(data){
+        let values =  data.map(obj => obj.value)
+        this.minMaxValue.splice(0,this.minMaxValue.length)
+        this.minMaxValue.push(Math.min.apply(null, values),Math.max.apply(null, values))
       }
     }
   }

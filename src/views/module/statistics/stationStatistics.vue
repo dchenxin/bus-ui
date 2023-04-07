@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-editor-container">
     <model-drop-down></model-drop-down>
-    <el-row :gutter="32">
-      <el-col>
+    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
+      <el-col style="height: 500px">
         <div class="chart-wrapper">
-          <div>
+          <div style="margin-bottom: 50px">
             <span class="title-text">起终点站查询频次统计</span>
             <el-radio-group v-model="defaultValue04" @change="stationBtnClick" size="small" style="float: right" fill="#63aff5">
               <el-radio-button label="昨日"></el-radio-button>

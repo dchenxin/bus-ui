@@ -2,9 +2,9 @@
   <div class="dashboard-editor-container">
     <model-drop-down></model-drop-down>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-col>
+      <el-col style="height: 500px">
         <div class="chart-wrapper">
-          <div>
+          <div style="margin-bottom: 50px">
             <span class="title-text">提前购票时间统计</span>
             <el-radio-group v-model="defaultValue02" @change="buyEarlyBtnClick" size="small" style="float: right" fill="#63aff5">
               <el-radio-button label="昨日"></el-radio-button>

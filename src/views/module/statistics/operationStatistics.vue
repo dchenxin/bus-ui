@@ -2,7 +2,7 @@
   <div class="dashboard-editor-container">
     <model-drop-down></model-drop-down>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-col style="height: 430px">
+      <el-col style="height: 500px">
         <div class="chart-wrapper">
           <div>
             <span class="title-text">小程序运营数据统计</span>
