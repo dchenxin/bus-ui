@@ -17,7 +17,6 @@
               <el-radio-button label="昨日"></el-radio-button>
               <el-radio-button label="近七日"></el-radio-button>
               <el-radio-button label="本月"></el-radio-button>
-              <el-radio-button label="本年"></el-radio-button>
             </el-radio-group>
           </div>
           <div style="margin-top: 1%;height: 35px">
@@ -52,7 +51,7 @@
               <chart-map ref="chartMap" v-on:select-change="change" :map-data="mapData"/>
             </div>
             <div style="width: 64%;float: right">
-              <line-chart :chart-data="lineChartData" :height="`480px` "/>
+              <one-line-chart :chart-data="lineChartData" :height="`480px` "/>
             </div>
           </div>
         </div>
@@ -244,6 +243,7 @@
         clickStatus: '1',
         //地图
         mapData: [],
+        selectValue: "",
         //折线图
         lineChartData: {
           xAxisData: [],
@@ -317,42 +317,45 @@
         })
       },
       change(val) {
+        this.selectValue = val;
+        this.getBusiness();
+      },
+      changeMap(val,data){
         //取本地缓存
-        let cacheData = JSON.parse(localStorage.getItem("businessData"))
         let arr = []
         if (val === '1') {
-          cacheData.forEach(data => {
+          data.forEach(data => {
             arr.push({
               name: data.name,
-              value: data.data[0]
+              value: data.bookNumData
             })
           })
         } else if (val === '2') {
-          cacheData.forEach(data => {
+          data.forEach(data => {
             arr.push({
               name: data.name,
-              value: data.data[1]
+              value: data.cancelNumData
             })
           })
         } else if (val === '3') {
-          cacheData.forEach(data => {
+          data.forEach(data => {
             arr.push({
               name: data.name,
-              value: data.data[2]
+              value: data.cancelAmountData
             })
           })
         } else if (val === '4') {
-          cacheData.forEach(data => {
+          data.forEach(data => {
             arr.push({
               name: data.name,
-              value: data.data[3]
+              value: data.revokeNumData
             })
           })
         } else {
-          cacheData.forEach(data => {
+          data.forEach(data => {
             arr.push({
               name: data.name,
-              value: data.data[4]
+              value: data.successAmountData
             })
           })
         }
@@ -361,15 +364,37 @@
       //获取业务统计数据
       getBusiness() {
         getBusinessStatistics(this.defaultValue).then(response => {
+          console.log(response)
           this.lineChartData.xAxisData = response.data.xaxisData;
-          this.lineChartData.data = response.data.data;
+
+          this.lineChartData.data.splice(0,this.lineChartData.data.length);
+          if (this.selectValue === '1') {
+            this.lineChartData.data.push({
+              data: response.data.data.map(obj => obj.bookNumData)
+            })
+          } else if (this.selectValue === '2') {
+            this.lineChartData.data.push({
+              data: response.data.data.map(obj => obj.cancelNumData)
+            })
+          } else if (this.selectValue === '3') {
+            this.lineChartData.data.push({
+              data: response.data.data.map(obj => obj.cancelAmountData)
+            })
+          } else if (this.selectValue === '4') {
+            this.lineChartData.data.push({
+              data: response.data.data.map(obj => obj.revokeNumData)
+            })
+          } else {
+            this.lineChartData.data.push({
+              data: response.data.data.map(obj => obj.successAmountData)
+            })
+          }
           this.bookNum = response.data.totalVo.bookNum
           this.cancelNum = response.data.totalVo.cancelNum
           this.cancelAmount = response.data.totalVo.cancelAmount
           this.revokeNum = response.data.totalVo.revokeNum
           this.successAmount = response.data.totalVo.successAmount
-          //存本地缓存
-          localStorage.setItem("businessData", JSON.stringify(response.data.data))
+          this.changeMap(this.selectValue === "" ? '1' : this.selectValue,response.data.data)
         });
       },
       businessBtnClick() {

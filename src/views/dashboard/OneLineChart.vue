@@ -100,7 +100,7 @@ export default {
             },
             markLine:{
               data:[
-                {type:"average",name:"Avg"}
+                {type:"average",name:"Avg",label:{formatter:'平均值：' + '{c}',position:"middle",fontWeight: "normal",fontSize:14,}}
                 ]
             },
             data: obj.data,

@@ -131,12 +131,12 @@
                     // formatter: '{b} \n' + this.countType + '：{@value}'
                     formatter: (param)=>{
                       if(param.value === this.minMaxValue[0]){
-                          return '{green|' + param.name +'\n' + this.countType + '：' + param.value + '}'
+                          return '{green|' + param.name +'\n' + this.countType + '：' + param.value + '%' + '}'
                       }
                       if(param.value === this.minMaxValue[1]){
-                        return '{red|' + param.name +'\n' + this.countType + '：' + param.value + '}'
+                        return '{red|' + param.name +'\n' + this.countType + '：' + param.value + '%' + '}'
                       }
-                      return  param.name +'\n' + this.countType + '：' + param.value
+                      return  param.name +'\n' + this.countType + '：' + param.value + '%'
                     },
                     rich:{
                       red:{
