@@ -51,7 +51,7 @@
               <chart-map ref="chartMap" v-on:select-change="change" :map-data="mapData"/>
             </div>
             <div style="width: 64%;float: right">
-              <one-line-chart :chart-data="lineChartData" :height="`480px` "/>
+              <one-line-chart :chart-data="lineChartData" :unit="unit" :height="`480px` "/>
             </div>
           </div>
         </div>
@@ -364,10 +364,10 @@
       //获取业务统计数据
       getBusiness() {
         getBusinessStatistics(this.defaultValue).then(response => {
-          console.log(response)
           this.lineChartData.xAxisData = response.data.xaxisData;
 
           this.lineChartData.data.splice(0,this.lineChartData.data.length);
+          this.unit = "%";
           if (this.selectValue === '1') {
             this.lineChartData.data.push({
               data: response.data.data.map(obj => obj.bookNumData)

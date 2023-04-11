@@ -94,8 +94,8 @@ export default {
             },
             markPoint: {
               data: [
-                { type: 'max', name: 'Max' },
-                { type: 'min', name: 'Min' }
+                { type: 'max', name: 'Max' ,label:{formatter:'最大值：' + '{c}'}},
+                { type: 'min', name: 'Min',label:{formatter:'最小值：' + '{c}'} }
               ]
             },
             markLine:{
