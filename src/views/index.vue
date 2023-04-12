@@ -85,7 +85,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px; height: 480px">
       <el-col>
         <div class="chart-wrapper">
           <div>
@@ -97,7 +97,7 @@
               <el-radio-button label="本年"></el-radio-button>
             </el-radio-group>
           </div>
-          <total-table :table-data="tableData"></total-table>
+          <total-table v-on:table-select-change="tableChange" :table-data="tableData"></total-table>
           <!--          <line-chart :chart-data="lineChartData03"/>-->
         </div>
       </el-col>
@@ -255,6 +255,7 @@
         },
         unit:"",
         tableData: [],
+        tableSelectValue:1,
         //多统计柱状图
         manyBarChartData:{
           aAxisData:[],
@@ -303,18 +304,7 @@
     methods: {
       //------------业务统计----------
       initMapData() {
-        //取本地缓存
-        let cacheData = JSON.parse(localStorage.getItem("businessData"))
-        let arr = []
-        cacheData.forEach(data => {
-          arr.push({
-            name: data.name,
-            value: data.data[0]
-          })
-        })
-        this.$nextTick(() => {
-          this.$refs.chartMap.setMapData(arr);
-        })
+        this.getBusiness();
       },
       change(val) {
         this.selectValue = val;
@@ -449,11 +439,15 @@
 
       //---------提前购票统计----------
       getBuyEarly(){
-        getBuyEarlyStatistics(this.defaultValue02).then(response => {
+        getBuyEarlyStatistics({type:this.defaultValue02,selectType:this.tableSelectValue}).then(response => {
           this.tableData = response.data
         })
       },
       buyEarlyBtnClick() {
+        this.getBuyEarly();
+      },
+      tableChange(val) {
+        this.tableSelectValue = val;
         this.getBuyEarly();
       },
 

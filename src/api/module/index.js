@@ -17,10 +17,11 @@ export function getOperationStatistics(type) {
 }
 
 // 首页提前购票统计
-export function getBuyEarlyStatistics(type) {
+export function getBuyEarlyStatistics(data) {
   return request({
-    url: '/module/buyEarlyStatistics/getBuyEarlyStatistics/' + type,
-    method: 'get'
+    url: '/module/buyEarlyStatistics/getBuyEarlyStatistics' ,
+    method: 'post',
+    data: data
   })
 }
 
