@@ -25,7 +25,12 @@ export default {
     pieChartData: {
       type: Object,
       required: true
-    }
+    },
+    name: {
+      type: String,
+      default: '',
+      required: true
+    },
   },
   data() {
     return {
@@ -107,12 +112,15 @@ export default {
         },
         series: [
           {
-            name: '用户性别分布',
+            name: this.name,
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
             data: data.data,
+            label:{
+              formatter: '{b}\n {d}%'
+            },
             animationEasing: 'cubicInOut',
             animationDuration: 2000
           }

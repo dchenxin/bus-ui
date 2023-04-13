@@ -129,8 +129,8 @@
               <el-radio-button label="本年"></el-radio-button>
             </el-radio-group>
           </div>
-          <!--          <bar-chart :bar-chart-data="barChartData"/>-->
-          <ManyBarChart :many-bar-chart-data="manyBarChartData"></ManyBarChart>
+          <bar-chart :bar-chart-data="barChartData"/>
+<!--          <ManyBarChart :many-bar-chart-data="manyBarChartData"></ManyBarChart>-->
         </div>
       </el-col>
     </el-row>
@@ -138,13 +138,13 @@
       <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
           <div class="title-text">用户性别分布</div>
-          <pie-chart :pie-chart-data="pieChartData"/>
+          <pie-chart :name="pieTitleValue01" :pie-chart-data="pieChartData" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
           <div class="title-text">用户年龄分布</div>
-          <pie-chart :pie-chart-data="pieChartData02"/>
+          <pie-chart :name="pieTitleValue02" :pie-chart-data="pieChartData02"/>
         </div>
       </el-col>
     </el-row>
@@ -256,12 +256,18 @@
         unit:"",
         tableData: [],
         tableSelectValue:1,
-        //多统计柱状图
-        manyBarChartData:{
+        //柱状图
+        barChartData:{
           aAxisData:[],
           startData:[],
           endData:[],
         },
+        // //多统计柱状图
+        // manyBarChartData:{
+        //   aAxisData:[],
+        //   startData:[],
+        //   endData:[],
+        // },
         //饼图
         pieChartData: {
           legendData: ["男", "女"],
@@ -271,6 +277,8 @@
           legendData: ["17岁以下", "18~24岁", "25～29岁", "30～39岁", "40~49岁", "50岁以上",],
           data: [],
         },
+        pieTitleValue01: "用户性别分布",
+        pieTitleValue02: "用户年龄分布",
         //柱状图
         // barChartData: {
         //   xAxisData: ["建阳", "武夷山", "南平", "延平", "浦城", "邵武", "光泽", "顺昌", "建瓯", "政和", "松溪"],
@@ -454,9 +462,9 @@
       //---------起终站搜索频率统计---------
       getStation(){
         getSearchRateStatistics(this.defaultValue04).then(response => {
-          this.manyBarChartData.aAxisData = response.data.aaxisData;
-          this.manyBarChartData.startData = response.data.startData;
-          this.manyBarChartData.endData = response.data.endData;
+          this.barChartData.aAxisData = response.data.aaxisData;
+          this.barChartData.startData = response.data.startData;
+          this.barChartData.endData = response.data.endData;
         })
       },
       stationBtnClick() {

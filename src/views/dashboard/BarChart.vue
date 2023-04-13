@@ -34,6 +34,14 @@ export default {
       chart: null
     }
   },
+  watch: {
+    barChartData: {
+      deep: true,
+      handler() {
+        this.initChart()
+      }
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       this.initChart(this.barChartData)
@@ -48,96 +56,48 @@ export default {
     this.chart = null
   },
   methods: {
-    // getBarCount(){
-    //   barCount().then(response => {
-    //     console.log(response.data)
-    //     this.chart = echarts.init(this.$el, 'macarons')
-    //
-    //     this.chart.setOption({
-    //       tooltip: {
-    //         trigger: 'axis',
-    //         axisPointer: { // 坐标轴指示器，坐标轴触发有效
-    //           type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-    //         }
-    //       },
-    //       grid: {
-    //         top: 10,
-    //         left: '2%',
-    //         right: '2%',
-    //         bottom: '3%',
-    //         containLabel: true
-    //       },
-    //       xAxis: [{
-    //         type: 'category',
-    //         data: ['一村一档', '乡村动态', '政策发布', '生态银行', '水美经济', '项目监督', '产品数量'],
-    //         axisTick: {
-    //           alignWithLabel: true
-    //         }
-    //       }],
-    //       yAxis: [{
-    //         type: 'value',
-    //         axisTick: {
-    //           show: false
-    //         }
-    //       }],
-    //       series: [{
-    //         name: '上架数',
-    //         type: 'bar',
-    //         stack: 'vistors',
-    //         barWidth: '60%',
-    //         data: response.data[0],
-    //         animationDuration
-    //       }, {
-    //         name: '下架数',
-    //         type: 'bar',
-    //         stack: 'vistors',
-    //         barWidth: '60%',
-    //         data: response.data[1],
-    //         animationDuration
-    //       }]
-    //     })
-    //
-    //   });
-    // },
-    initChart(data) {
+    initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
       this.chart.setOption({
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          },
-          formatter: '{b}<br />频次：{c}'
-        },
+        legend: {},
         grid: {
           left: '3%',
           right: '4%',
           bottom: '3%',
           containLabel: true
         },
-        xAxis: [
-          {
-            type: 'category',
-            data: data.xAxisData,
-            axisTick: {
-              alignWithLabel: true
-            }
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
           }
-        ],
-        yAxis: [
-          {
-            type: 'value'
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            magicType: { show: true, type: ['line', 'bar', 'stack'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
           }
-        ],
-        series: [
-          {
-            name: '频次',
-            type: 'bar',
-            barWidth: '60%',
-            data: data.data
-          }
-        ]
+        },
+        dataset: {
+          source: [
+            this.barChartData.aAxisData,
+            this.barChartData.startData,
+            this.barChartData.endData
+            // ['product', '松溪县', '南平市', '浦城县', '政和县', '顺昌县', '光泽县', '建阳区', '延平区', '邵武市', '建瓯市', '武夷山市'],
+            // ['起始站', 16, 35, 41, 64, 31, 28, 26, 29, 36, 32, 56],
+            // ['终点站', 21, 39, 31, 54, 47, 58, 29, 21, 30, 42, 36],
+          ]
+        },
+        xAxis: { type: 'category' },
+        yAxis: {},
+        series: [{ type: 'bar' }, { type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' },{ type: 'bar' }]
       })
     }
   }
