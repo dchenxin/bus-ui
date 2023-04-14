@@ -163,7 +163,7 @@
           <across-bar-chart :across-bar-chart-data="acrossBarChartData"/>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="24" :sm="30" :lg="12">
         <div class="chart-wrapper">
           <div>
             <span class="title-text">实载率数据统计</span>
@@ -172,7 +172,8 @@
               <el-radio-button label="今日"></el-radio-button>
             </el-radio-group>
           </div>
-          <across-bar-chart :across-bar-chart-data="acrossBarChartData02" :unit="`%`"/>
+            <one-bar-chart :bar-chart-data="oneBarChartData"/>
+<!--          <across-bar-chart :across-bar-chart-data="acrossBarChartData02" :unit="`%`" />-->
         </div>
       </el-col>
     </el-row>
@@ -191,6 +192,7 @@
   import AcrossBarChart from './dashboard/AcrossBarChart'
   import ChartMap from './dashboard/ChartMap'
   import TotalTable from './dashboard/TotalTable'
+  import OneBarChart from './dashboard/OneBarChart'
   import ManyBarChart from './dashboard/ManyBarChart'
 
   export default {
@@ -205,7 +207,8 @@
       AcrossBarChart,
       ChartMap,
       TotalTable,
-      ManyBarChart
+      ManyBarChart,
+      OneBarChart
     },
     watch: {
       clickStatus: {
@@ -288,10 +291,16 @@
           yAxisData: [],
           data: []
         },
-        acrossBarChartData02: {
-          yAxisData: [],
+        // acrossBarChartData02: {
+        //   yAxisData: [],
+        //   data: []
+        // }
+        oneBarChartData:{
+          // xAxisData: ["建阳", "武夷山", "南平", "延平", "浦城", "邵武", "光泽", "顺昌", "建瓯", "政和", "松溪"],
+          // data: [22, 23, 34, 56, 47, 28, 21, 25, 28, 26, 25],
+          xAxisData: [],
           data: []
-        }
+        },
       }
     },
     mounted() {
@@ -495,8 +504,9 @@
       //--------------实载率----------------
       getRealLoad(){
         getRealLoadStatistics(this.defaultValue06).then(response => {
-          this.acrossBarChartData02.yAxisData = response.data.aaxisData;
-          this.acrossBarChartData02.data = response.data.data;
+          console.log(response)
+          this.oneBarChartData.xAxisData = response.data.aaxisData;
+          this.oneBarChartData.data = response.data.data;
         })
       },
       realLoadBtnClick() {
@@ -516,7 +526,7 @@
       background: #fff;
       padding: 16px 16px 0;
       margin-bottom: 32px;
-      height: 360px;
+      height: 410px;
     }
   }
 
