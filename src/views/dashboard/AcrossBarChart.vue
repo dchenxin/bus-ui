@@ -61,57 +61,6 @@
       this.chart = null
     },
     methods: {
-      // getBarCount(){
-      //   barCount().then(response => {
-      //     console.log(response.data)
-      //     this.chart = echarts.init(this.$el, 'macarons')
-      //
-      //     this.chart.setOption({
-      //       tooltip: {
-      //         trigger: 'axis',
-      //         axisPointer: { // 坐标轴指示器，坐标轴触发有效
-      //           type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-      //         }
-      //       },
-      //       grid: {
-      //         top: 10,
-      //         left: '2%',
-      //         right: '2%',
-      //         bottom: '3%',
-      //         containLabel: true
-      //       },
-      //       xAxis: [{
-      //         type: 'category',
-      //         data: ['一村一档', '乡村动态', '政策发布', '生态银行', '水美经济', '项目监督', '产品数量'],
-      //         axisTick: {
-      //           alignWithLabel: true
-      //         }
-      //       }],
-      //       yAxis: [{
-      //         type: 'value',
-      //         axisTick: {
-      //           show: false
-      //         }
-      //       }],
-      //       series: [{
-      //         name: '上架数',
-      //         type: 'bar',
-      //         stack: 'vistors',
-      //         barWidth: '60%',
-      //         data: response.data[0],
-      //         animationDuration
-      //       }, {
-      //         name: '下架数',
-      //         type: 'bar',
-      //         stack: 'vistors',
-      //         barWidth: '60%',
-      //         data: response.data[1],
-      //         animationDuration
-      //       }]
-      //     })
-      //
-      //   });
-      // },
       initChart(data) {
         this.chart = echarts.init(this.$el, 'macarons')
 
@@ -143,7 +92,11 @@
           series: [{
             name: '',
             type: 'bar',
-            data: data.data
+            data: data.data,
+            label: {
+              show: true,
+              position: 'right'
+            },
           }
             // {
             //   name: '2012',

@@ -89,15 +89,23 @@
           ],
           yAxis: [
             {
-              type: 'value'
-            }
+              type: 'value',
+              axisLabel: {
+                formatter: '{value}' + '%'
+              }
+            },
           ],
           series: [
             {
-              name: '频次',
+              name: '实载率',
               type: 'bar',
               barWidth: '60%',
-              data: data.data
+              data: data.data,
+              label: {
+                show: true,
+                position: 'top',
+                formatter:'{c}' + '%'
+              },
             }
           ]
         })
