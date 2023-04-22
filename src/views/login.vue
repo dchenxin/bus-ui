@@ -48,7 +48,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2019-2020 振兴乡村 All Rights Reserved.</span>
+      <span>Copyright © 2019-2020 公交调度管理系统 All Rights Reserved.</span>
     </div>
   </div>
 </template>
